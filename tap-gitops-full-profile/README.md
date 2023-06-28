@@ -1,6 +1,6 @@
 ## Purpose
 
-This automation is designed to build a Tanzu Application Platform 1.5.x single cluster instances on all AWS services i.e EKS , ECR , Route53 etc. 
+This automation is designed to build a Tanzu Application Platform 1.5.x full profile  cluster  AWS  EKS using gitops feature. 
 
 
 Specifically, this automation will build:
