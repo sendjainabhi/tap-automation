@@ -1,13 +1,22 @@
 ## Purpose
 
-This automation is designed to build a Tanzu Application Platform 1.5.x single cluster instances on all AWS services i.e EKS , ECR , Route53 etc. 
+This automation is designed to build following 
 
+* Tanzu Application Platform 1.5.x single cluster instances on all AWS services i.e EKS , ECR , Route53 etc. 
 
+* Tanzu Application Platform 1.5.x single cluster full profile on AWS eks . 
+
+* AWS VPC terraform for Tanzu Mission Control AWS EKS LCM.
+
+### TAP 1.5.x single cluster instances on all AWS services
 Specifically, this automation will build:
 - a aws VPC (internet facing)
 - 1 EKS clusters named as tap-full and associated security IAM roles and groups and nodes into aws. 
 - Install Tanzu Application Platform full profile on eks clusters. 
 - Install Tanzu Application Platform sample demo app. 
+
+### AWS VPC terraform for Tanzu Mission Control AWS EKS LCM
+Specifically, this automation will build an internet facing aws VPC and a jumpbox ec2 instance for TMC provisioned EKS and its LCM. 
 
 ## AWS resources matrix 
 
@@ -24,6 +33,7 @@ Following cli must be setup into jumbbox or execution machine/terminal.
 
    * aws cli 
    * eksctl cli 
+   * terraform cli
 
 
 ## Prepare the Environment
@@ -37,11 +47,16 @@ export AWS_ACCESS_KEY_ID=<your AWS access key>
 export AWS_SECRET_ACCESS_KEY=<your AWS secret access key>
 export AWS_REGION=us-east-1  # ensure the region is set correctly. this must agree with what you set in the tf files below.
 ```
-**Note** - Even if you are only running TAP scripts on existing eks clusters , please set above `aws` environment variables.
+
+
+### TAP 1.5.x single cluster instances on all AWS services steps
 
 ### Add TAP configuration mandatory details 
 
 Add following details into `/var.conf` file to fullfill tap prerequisite. Examples and default values given in below sample. All fields are mandatory and can't be leave blank and must be filled before executing the `tap-index.sh` . Please refer below sample config file. 
+
+**Note** - Even if you are only running TAP scripts on existing eks clusters , please set above `aws` environment variables.
+
 ```
 
 
@@ -103,6 +118,24 @@ chmod +x tap-index.sh
  * **Example full cluster** - *.full.customer0.io ==> <ingress external ip/cname>
 
 
-## Clean up
+#### Clean up
+ Delete TAP instances from eks cluster
 
-### Delete TAP instances from eks cluster
+## AWS VPC terraform for Tanzu Mission Control AWS EKS LCM
+
+To create an internet facing aws vpc for eks creation from TMC please following below steps :
+```
+cd tmc-vpc-terraform
+
+1. terraform init
+
+2. terraform plan
+
+3. terraform apply
+
+# to delete vpc run
+
+terraform destroy
+
+```
+
